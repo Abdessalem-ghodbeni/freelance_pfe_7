@@ -1,0 +1,11 @@
+.card1 {
+    border: 1px solid lightgray;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .card1-title {
+    font-size: 1.25rem;
+  }
+  .card1-text {
+    font-size: 1rem;
+  }
+  

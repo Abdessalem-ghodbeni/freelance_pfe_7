@@ -1,0 +1,118 @@
+<section class="py-0">
+  <div class=" ">
+    <div class="row">
+      <div class="col-12">
+        <div class="bg-light p-4 text-center rounded-3">
+          <h2 class="m-0">Liste totale Des Factures ...</h2>
+          <!-- Breadcrumb -->
+          <div class="d-flex justify-content-center mt-3">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-dots mb-0">
+                <li class="breadcrumb-item">
+                  <a href="admin/historique-commande">Liste des commande</a>
+                </li>
+                <li class="breadcrumb-item">
+                  <a href="admin/ajouter-article">Ajouter Article</a>
+                </li>
+
+                <li class="breadcrumb-item">
+                  <a href="admin/list-client"> Liste des client</a>
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- =======================
+Page Banner END -->
+
+<!-- =======================
+Page content START -->
+<section class="pt-5">
+  <div class="p-2 p-md-5">
+    <div
+      class="row g-4 g-sm-5 text-center justify-content-center align-items-center"
+      *ngFor="let facture of ListeFacture; let i = index"
+    >
+      <!-- Main content START -->
+      <div class="col-lg-8 mb-4 mb-sm-0">
+        <div class="card card-body p-4 shadow">
+          <!-- Alert -->
+          <div
+            class="alert alert-danger alert-dismissible d-flex justify-content-between align-items-center fade show py-3 pe-2"
+            role="alert"
+          >
+            <div>
+              <span class="fs-5 me-1">🔥</span>
+              Ceci la facture numéro
+              <strong class="text-danger ms-1"> {{ facture.id }}</strong>
+            </div>
+            <button
+              type="button"
+              class="btn btn-link mb-0 text-primary-hover text-end"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            >
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+
+          <div class="table-responsive border-0 rounded-3">
+            <!-- Table START -->
+            <table class="table align-middle p-4 mb-0">
+              <!-- Table head -->
+              <!-- Table body START -->
+              <tbody class="border-top-0">
+                <!-- Table item -->
+                <tr>
+                  <!-- Course item -->
+                  <td>
+                    <div class="d-lg-flex align-items-center">
+                      <!-- Image -->
+                      <div class="w-100px w-md-80px mb-2 mb-md-0">
+                        <img
+                          src="assets/caisse.png"
+                          class="rounded img-fluid"
+                          alt=""
+                        />
+                      </div>
+                      <!-- Title -->
+                      <h6 class="mb-0 ms-lg-3 mt-2 mt-lg-0">
+                        <a href="#">
+                          Montant Totale : {{ facture.montantTotal }} Dt</a
+                        >
+                      </h6>
+                    </div>
+                  </td>
+                  <td>
+                    <h6 class="mb-0 ms-lg-3 mt-2 mt-lg-0">
+                      <a href="#">
+                        Date :
+                        <strong>
+                          {{ facture.dateCommande | date : "dd/MM/yyyy" }}
+                        </strong></a
+                      >
+                    </h6>
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-danger-soft px-2 mb-0"
+                      (click)="deleteArticle(facture.id, i)"
+                    >
+                      <i class="fas fa-fw fa-times"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Main content END -->
+    </div>
+    <!-- Row END -->
+  </div>
+</section>

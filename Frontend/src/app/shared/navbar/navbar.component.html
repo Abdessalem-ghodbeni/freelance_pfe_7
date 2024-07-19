@@ -1,0 +1,53 @@
+<!-- navbar.component.html -->
+<header class="header">
+    <div class="header__top">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 col-md-6">
+            <div class="header__top__left">
+              <ul>
+                <li><i class="fa fa-envelope"></i> E-commerce@gmail.com</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6">
+            <div class="header__top__right">
+              <div class="header__top__right__social">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+                <a href="#"><i class="fa fa-pinterest-p"></i></a>
+              </div>
+              <div class="header__top__right__auth" *ngIf="!user">
+                <a href="signin"><i class="fa fa-user"></i> Login</a>
+              </div>
+              <div class="header__top__right__auth" *ngIf="user">
+                <img [src]="user.photo" alt="User Photo" class="user-photo">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+              <li class="nav-item active">
+                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">Menu</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">Historique</a>
+              </li>
+          </ul>
+      </div>
+  </nav>
+  
+  </header>
+  

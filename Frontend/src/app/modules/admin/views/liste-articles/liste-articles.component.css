@@ -1,0 +1,8 @@
+.img-responsive-hover {
+  width: 50px; /* Taille initiale de l'image */
+  transition: transform 0.3s ease;
+}
+
+.img-responsive-hover:hover {
+  transform: scale(1.5); /* Agrandissement de l'image au survol */
+}

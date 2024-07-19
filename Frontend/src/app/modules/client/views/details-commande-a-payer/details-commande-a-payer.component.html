@@ -1,0 +1,474 @@
+<div class="conatiner" *ngIf="GetFacture">
+  <app-facture-ticket
+    [idcommande]="idcommande"
+    [idFacture]="idFacture"
+    [modepaiment]="modepaiment"
+  ></app-facture-ticket>
+</div>
+
+<div class="col-xl-11 ms-4 text-center" *ngIf="!GetFacture">
+  <div class="card bg-transparent border rounded-3">
+    <!-- Card header START -->
+    <div class="card-header bg-transparent border-bottom">
+      <h3 class="mb-0">Contenue de commande</h3>
+      <div class="alert mt-4 alert-secondary" role="alert">
+        <h4 class="mb-0">
+          Date commande
+          {{ commande?.dateCommande | date : "yyyy-MM-dd HH:mm:ss" }}
+        </h4>
+      </div>
+
+      <div class="alert alert-primary mt-2" role="alert">
+        <h6>
+          Le montant totale de cette commande est :
+          <strong class="ms-2">
+            {{ commande?.facture?.montantTotal }} Dt</strong
+          >
+        </h6>
+      </div>
+    </div>
+    <!-- Card header END -->
+
+    <!-- Card body START -->
+    <div class="card-body">
+      <!-- Title and select START -->
+      <div class="row g-3 align-items-center justify-content-between mb-4">
+        <!-- Content -->
+        <div class="col-md-8">
+          <form class="rounded position-relative">
+            <input
+              class="form-control pe-5 bg-transparent"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button
+              class="bg-transparent p-2 position-absolute top-50 end-0 translate-middle-y border-0 text-primary-hover text-reset"
+              type="submit"
+            >
+              <i class="fas fa-search fs-6"></i>
+            </button>
+          </form>
+        </div>
+
+        <!-- Select option -->
+        <div class="col-md-3">
+          <!-- Short by filter -->
+          <form>
+            <select
+              class="form-select js-choice border-0 z-index-9 bg-transparent"
+              aria-label=".form-select-sm"
+            >
+              <option value="">Sort by</option>
+              <option>Newest</option>
+              <option>Oldest</option>
+            </select>
+          </form>
+        </div>
+      </div>
+      <!-- Title and select END -->
+
+      <!-- Student list table START -->
+      <div class="table-responsive border-0">
+        <table class="table table-dark-gray align-middle p-4 mb-0 table-hover">
+          <!-- Table head -->
+          <thead>
+            <tr>
+              <th scope="col" class="border-0 rounded-start">id</th>
+              <th scope="col" class="border-0">Nom Article</th>
+              <th scope="col" class="border-0">Prix article</th>
+              <!-- <th scope="col" class="border-0">Categorie</th> -->
+              <th scope="col" class="border-0">Quantité</th>
+              <!-- <th scope="col" class="border-0 rounded-end">Action</th> -->
+            </tr>
+          </thead>
+          <!-- Table body -->
+          <tbody>
+            <tr *ngFor="let article of ListeArticleConstituantCommande">
+              <td>{{ article.article.id }}</td>
+              <td>
+                <h6 class="mt-2 mt-lg-0 mb-0">
+                  <a href="#">{{ article.article.nom }}</a>
+                </h6>
+              </td>
+              <td>{{ article.article.prix }}</td>
+              <!-- <td>{{ article.article.categorie.nom }}</td> -->
+              <td>{{ article?.quantity }}</td>
+              <!-- <td>
+                <a
+                  href="#"
+                  class="btn btn-primary-soft btn-round me-1 mb-1 mb-md-0"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Download"
+                >
+                  <i class="bi bi-download"></i>
+                </a>
+              </td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- Payment method START -->
+  <div class="card bg-transparent border mt-5 rounded-3 mb-4">
+    <!-- Card header START -->
+    <div
+      class="card-header bg-transparent d-sm-flex justify-content-sm-between align-items-center border-bottom"
+    >
+      <h3 class="mb-2 mb-sm-0">Mode de Payement</h3>
+    </div>
+    <!-- Card header END -->
+
+    <!-- Card body START -->
+    <div class="card-body">
+      <div class="row justify-content-center align-items-center">
+        <p class="mt-5 text-center">
+          <strong>Paiment avec carte bancaire,visa... </strong>
+        </p>
+        <div class="col-12 col-md-6 p-2">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="ms-5">
+              <h6 class="accordion-header font-base" id="heading-1">
+                <button
+                  class="accordion-button bg-white rounded collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapse-1"
+                  aria-expanded="true"
+                  aria-controls="collapse-1"
+                  (click)="setModePaiementCard()"
+                >
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault1"
+                      (click)="setModePaiementCard()"
+                    />
+                    <label
+                      class="form-check-label mt-1 mx-1"
+                      for="flexRadioDefault1"
+                    >
+                      Credit ou bien Debit Card
+                    </label>
+                  </div>
+                </button>
+              </h6>
+            </div>
+            <div class="me-5 mt-1" *ngIf="modepaiment === 'CARTE_BANCAIRE'">
+              <button
+                class="btn btn-outline-primary mb-2"
+                (click)="payeCommande()"
+              >
+                Payé
+              </button>
+            </div>
+          </div>
+          <form class="row text-start g-3">
+            <!-- Card number -->
+            <div class="col-12">
+              <label class="form-label"
+                >Card Numéro <span class="text-danger">*</span></label
+              >
+              <div class="position-relative">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="xxxx xxxx xxxx xxxx"
+                />
+                <img
+                  src="assets/images/client/visa.svg"
+                  class="w-40px position-absolute top-50 end-0 translate-middle-y me-2 d-none d-sm-block"
+                  alt=""
+                />
+              </div>
+            </div>
+            <!-- Expiration Date -->
+            <div class="col-md-6">
+              <label class="form-label">
+                date d'expiration<span class="text-danger">*</span></label
+              >
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  maxlength="2"
+                  placeholder="Month"
+                />
+                <input
+                  type="text"
+                  class="form-control"
+                  maxlength="4"
+                  placeholder="Year"
+                />
+              </div>
+            </div>
+            <!--Cvv code  -->
+            <div class="col-md-6">
+              <label class="form-label"
+                >CVV / CVC <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                maxlength="3"
+                placeholder="xxx"
+              />
+            </div>
+            <!-- Card name -->
+            <div class="col-12">
+              <label class="form-label"
+                >nom du card <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                aria-label="name of card holder"
+                placeholder="Enter name"
+              />
+            </div>
+          </form>
+        </div>
+        <div class="col-12 col-md-6 p-2">
+          <img src="assets/carte.png" class="img-fluid w-100" alt="" />
+        </div>
+      </div>
+      <div class="row justify-content-center mt-0 align-items-center">
+        <p class="mt-5 text-center">
+          <strong>Paiment Espece </strong>
+        </p>
+        <div class="col-12 col-md-6 p-2">
+          <img src="assets/es.jpg" class="img-fluid w-75" alt="" />
+        </div>
+        <div class="col-12 col-md-6 p-2">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="ms-2">
+              <h6 class="accordion-header font-base" id="heading-2">
+                <button
+                  class="accordion-button collapsed bg-white rounded"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapse-2"
+                  aria-expanded="false"
+                  aria-controls="collapse-2"
+                  (click)="setModePaiement()"
+                >
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault1"
+                      (click)="setModePaiement()"
+                    />
+                    <label
+                      class="form-check-label mt-1 mx-1"
+                      for="flexRadioDefault1"
+                    >
+                      Payement par espece
+                    </label>
+                  </div>
+                </button>
+              </h6>
+            </div>
+
+            <div class="me-5 mt-1" *ngIf="modepaiment === 'ESPECE'">
+              <button
+                class="btn btn-outline-primary mb-0"
+                (click)="payeCommande()"
+              >
+                Payé
+              </button>
+            </div>
+          </div>
+          <form class="row text-start g-3">
+            <p class="mb-1">
+              Moyen de paiement physique : Le paiement en espèces implique le
+              transfert physique de billets et de pièces de monnaie du client au
+              commerçant ou à l'entreprise.
+            </p>
+            <p class="my-0">
+              Moyen de paiement physique : Le paiement en espèces implique le
+              transfert physique de billets et de pièces de monnaie du client au
+              commerçant ou à l'entreprise.Absence de transactions électroniques
+              : Contrairement aux paiements par carte bancaire, virement ou
+              autre moyen électronique, le paiement en espèces ne nécessite pas
+              de transactions bancaires ou de système de paiement en ligne.
+            </p>
+            <!-- Select bank -->
+          </form>
+        </div>
+      </div>
+
+      <!-- <div class="accordion accordion-circle" id="accordioncircle">
+       
+        <div class="accordion-item mb-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="ms-5">
+              <h6 class="accordion-header font-base" id="heading-1">
+                <button
+                  class="accordion-button bg-white rounded collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapse-1"
+                  aria-expanded="true"
+                  aria-controls="collapse-1"
+                  (click)="setModePaiementCard()"
+                >
+                  Credit ou bien Debit Card
+                </button>
+              </h6>
+            </div>
+            <div class="me-5 mt-1" *ngIf="modepaiment === 'CARTE_BANCAIRE'">
+              <button
+                class="btn btn-outline-primary mb-0"
+                (click)="payeCommande()"
+              >
+                Payé
+              </button>
+            </div>
+          </div>
+
+          <div
+            id="collapse-1"
+            class="accordion-collapse collapse show"
+            aria-labelledby="heading-1"
+            data-bs-parent="#accordioncircle"
+          >
+             
+            <div class="accordion-body">
+              
+              <form class="row text-start g-3">
+               
+                <div class="col-12">
+                  <label class="form-label"
+                    >Card Numéro <span class="text-danger">*</span></label
+                  >
+                  <div class="position-relative">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="xxxx xxxx xxxx xxxx"
+                    />
+                    <img
+                      src="assets/images/client/visa.svg"
+                      class="w-40px position-absolute top-50 end-0 translate-middle-y me-2 d-none d-sm-block"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <label class="form-label">
+                    date d'expiration<span class="text-danger">*</span></label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      maxlength="2"
+                      placeholder="Month"
+                    />
+                    <input
+                      type="text"
+                      class="form-control"
+                      maxlength="4"
+                      placeholder="Year"
+                    />
+                  </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <label class="form-label"
+                    >CVV / CVC <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    maxlength="3"
+                    placeholder="xxx"
+                  />
+                </div>
+           
+                <div class="col-12">
+                  <label class="form-label"
+                    >nom du card <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    aria-label="name of card holder"
+                    placeholder="Enter name"
+                  />
+                </div>
+              </form>
+               
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item mb-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="ms-2">
+              <h6 class="accordion-header font-base" id="heading-2">
+                <button
+                  class="accordion-button collapsed bg-white rounded"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapse-2"
+                  aria-expanded="false"
+                  aria-controls="collapse-2"
+                  (click)="setModePaiement()"
+                >
+                  Payement par espece
+                </button>
+              </h6>
+            </div>
+
+            <div class="me-5 mt-1" *ngIf="modepaiment === 'ESPECE'">
+              <button
+                class="btn btn-outline-primary mb-0"
+                (click)="payeCommande()"
+              >
+                Payé
+              </button>
+            </div>
+          </div>
+          <div
+            id="collapse-2"
+            class="accordion-collapse collapse"
+            aria-labelledby="heading-2"
+            data-bs-parent="#accordioncircle"
+          >
+            
+            <div class="accordion-body">
+              
+              <form class="row text-start g-3">
+                <p class="mb-1">
+                  Moyen de paiement physique : Le paiement en espèces implique
+                  le transfert physique de billets et de pièces de monnaie du
+                  client au commerçant ou à l'entreprise.
+                </p>
+                <p class="my-0">
+                  Moyen de paiement physique : Le paiement en espèces implique
+                  le transfert physique de billets et de pièces de monnaie du
+                  client au commerçant ou à l'entreprise.Absence de transactions
+                  électroniques : Contrairement aux paiements par carte
+                  bancaire, virement ou autre moyen électronique, le paiement en
+                  espèces ne nécessite pas de transactions bancaires ou de
+                  système de paiement en ligne.
+                </p>
+             
+              </form>
+               
+            </div>
+          </div>
+        </div>
+       
+      </div> -->
+    </div>
+  </div>
+</div>

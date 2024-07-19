@@ -1,0 +1,177 @@
+<div class="page-content-wrapper border">
+  <div class="row g-4 justify-content-center align-items-center">
+    <div class="col-xl-9 mt-5">
+      <div class="tab-content">
+        <div class="w-100">
+          <div class="bg-light rounded-3 p-4 mb-3">
+            <div class="d-md-flex justify-content-between align-items-center">
+              <div>
+                <h6 class="h5">Liste des Catégorie</h6>
+                <p class="mb-1 mb-md-0">
+                  Une visibilité claire pour un controle plus efficace...
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card border mt-4">
+            <!-- Card header -->
+            <div class="card-header border-bottom">
+              <h5 class="card-header-title"></h5>
+            </div>
+
+            <div class="card-body">
+              <div class="table-responsive border-0">
+                <table
+                  class="table table-dark-gray align-middle p-4 mb-0 table-hover"
+                >
+                  <thead>
+                    <tr>
+                      <th scope="col" class="border-0 rounded-start">
+                        Numéro catégorie
+                      </th>
+                      <th scope="col" class="border-0">nom categorie</th>
+                      <th scope="col" class="border-0">
+                        description categorie
+                      </th>
+                      <th scope="col" class="border-0 rounded-end">Action</th>
+                    </tr>
+                  </thead>
+
+                  <!-- Table body START -->
+                  <tbody *ngFor="let categorie of listeCategorie">
+                    <!-- Table row -->
+                    <tr>
+                      <td>{{ categorie.id }}</td>
+                      <td>{{ categorie.nom }}</td>
+
+                      <!-- Table data -->
+                      <td>{{ categorie.description }}</td>
+
+                      <td>
+                        <button
+                          (click)="deleteCategorie(categorie.id)"
+                          class="btn btn-sm btn-danger-soft me-1 mb-1 mb-md-0"
+                        >
+                          Delete
+                        </button>
+                        <button
+                          data-bs-toggle="modal"
+                          data-bs-target="#getUpdateCard"
+                          title=""
+                          data-bs-original-title="Update Article"
+                          (click)="getByid(categorie.id)"
+                          class="btn btn-sm btn-success-soft me-1 mb-1 mb-md-0"
+                        >
+                          Modifier
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Card body END -->
+          </div>
+          <!-- Active Logs END -->
+        </div>
+      </div>
+      <!-- Tab Content END -->
+    </div>
+    <!-- Right side END -->
+  </div>
+  <!-- Row END -->
+</div>
+<div
+  class="modal fade"
+  id="getUpdateCard"
+  tabindex="-1"
+  aria-labelledby="getUpdateCard"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-dark">
+        <h5 class="modal-title text-white" id="getUpdateCard">
+          Details Catégorie
+        </h5>
+        <button
+          type="button"
+          class="btn btn-sm btn-light mb-0"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-12">
+          <div class="card shadow h-100">
+            <form
+              [formGroup]="addFormUpdateCategorie"
+              (ngSubmit)="UpdateCategorie()"
+            >
+              <div class="mb-3 col-12">
+                <label for="nom_Foyer" class="form-label">Nom categorie</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nom_Foyer"
+                  aria-describedby="foyerName"
+                  formControlName="nom"
+                />
+                <span
+                  *ngIf="
+                    addFormUpdateCategorie.get('nom')?.invalid &&
+                    addFormUpdateCategorie.get('nom')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Nom du categorie est obligatoire.
+                </span>
+              </div>
+              <div class="mb-3 col-12">
+                <label for="capacity" class="form-label"
+                  >Description du catégorie
+                </label>
+                <textarea
+                  type="text"
+                  class="form-control"
+                  id="description"
+                  formControlName="description"
+                ></textarea>
+
+                <span
+                  *ngIf="
+                    addFormUpdateCategorie.get('description')?.invalid &&
+                    addFormUpdateCategorie.get('description')?.touched
+                  "
+                  class="text-danger"
+                >
+                  description du catégorie est obligatoire.
+                </span>
+              </div>
+              <div class="mt-2 mt-sm-0">
+                <button class="btn btn-outline-primary mb-0" type="submit">
+                  Modifier catégorie
+                </button>
+              </div>
+            </form>
+          </div>
+          <!-- Card footer -->
+          <div class="card-footer pt-0 pb-3">
+            <hr />
+            <div class="d-flex justify-content-between">
+              <span class="h6 fw-light mb-0"
+                ><i class="fas fa-dollar-sign text-success me-2"> </i>Ravi de
+                vous accompagner jusqu'a la modification de votre catégorie...
+                <i class="fas fa-dollar-sign text-success me-2"> </i
+              ></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer"></div>
+  </div>
+</div>

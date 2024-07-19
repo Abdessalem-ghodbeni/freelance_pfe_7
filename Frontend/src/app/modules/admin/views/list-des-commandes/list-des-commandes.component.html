@@ -1,0 +1,40 @@
+<div class="page-content-wrapper border">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="h3 mb-2 mb-sm-0">Liste des commandes </h1>
+      </div>
+    </div>
+  
+    <div class="card bg-transparent">
+      <div class="row justify-content-center mt-5">
+        <div class="card-body">
+          <ng-template #noData>
+            <div class="alert alert-secondary" role="alert">
+              Aucune commande en ce moment...
+            </div>
+          </ng-template>
+  
+          <div class="card-group">
+            <div class="row" *ngIf="client.commandes.length; else noData">
+              <ng-container *ngFor="let commande of client.commandes; let i = index">
+                <div class="col-md-4 mb-4">
+                  <div class="card border">
+                    <div class="card-body">
+                      <h5 class="card-title">Commande : {{ i + 1 }}</h5>
+                      <p class="card-text">
+                        <strong>Date Commande:</strong> {{ commande.dateCommande | date:'short' }}
+                      </p>
+                      <p class="card-text">
+                        <strong>Montant Total:</strong> {{ commande.facture.montantTotal }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

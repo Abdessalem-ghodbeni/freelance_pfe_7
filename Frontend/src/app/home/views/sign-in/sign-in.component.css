@@ -1,0 +1,21 @@
+
+  #myCenteredDiv h3 {
+    /* Style pour le titre h3 à l'intérieur de la div avec l'ID "myCenteredDiv" */
+    font-weight: bold;
+  }
+  
+  #myCenteredDiv div {
+    /* Style pour le contenu à l'intérieur de la div avec l'ID "myCenteredDiv" */
+    color: white;
+  }
+  
+  #myCenteredDiv button {
+    /* Style pour le bouton à l'intérieur de la div avec l'ID "myCenteredDiv" */
+    border-radius: 10px; /* Ajout d'un border-radius de 10px */
+  }
+  
+  
+  .custumer_size {
+    width: 2.3%;
+    margin: 2px;
+  }

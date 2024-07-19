@@ -1,0 +1,134 @@
+<div class="container mt-6 mb-7">
+  <div class="row justify-content-center">
+    <div class="col-lg-12 col-xl-7 mb-4">
+      <div class="d-flex justify-content-end">
+        <button (click)="downloadPDF()" class="btn btn-primary mt-3">
+          Télécharger Facture
+        </button>
+      </div>
+      <div id="pdfContent" class="card">
+        <div class="card-body p-5">
+          <h2>Chér(e) notre client</h2>
+          <p class="fs-sm">
+            Ceci votre Facture d'achat de notre restaurant, nous sommes ravi de
+            vous offrir nos services,Vous êtes le bienvenue !!
+          </p>
+
+          <div class="border-top border-gray-200 pt-4 mt-4">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="text-muted mb-2">Date de paiement</div>
+                <strong> </strong>
+              </div>
+              <div class="col-md-6 text-md-end">
+                <div class="text-muted mb-2">
+                  {{ facture?.dateCommande | date : "yyyy-MM-dd HH:mm:ss" }}
+                </div>
+                <strong> </strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-top border-gray-200 mt-4 py-4">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="text-muted mb-2"></div>
+                <strong> Facture Numéro </strong>
+                <p class="fs-sm">
+                  <br />
+                </p>
+              </div>
+              <div class="col-md-6 text-md-end">
+                <a href="#!" class="text-purple">{{ facture.id }} </a>
+              </div>
+            </div>
+          </div>
+
+          <table class="table border-bottom border-gray-200 mt-3">
+            <thead>
+              <tr>
+                <th
+                  scope="col"
+                  class="fs-sm text-dark text-uppercase-bold-sm px-0"
+                >
+                  Mode de Paiement
+                </th>
+                <th
+                  scope="col"
+                  class="fs-sm text-dark text-uppercase-bold-sm text-end px-0"
+                >
+                  {{ modePaiementFacture }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="d-flex justify-content-around align-items-center ms-0 ms-md-4"
+              >
+                <td class=" ">Articles :</td>
+                <td class=" ">Prix d'article</td>
+                <td class=" ">Quantité</td>
+              </tr>
+              <tr
+                *ngFor="let item of ListeArticleConstituantCommande"
+                class="d-flex justify-content-around align-items-center ms-0 ms-md-4"
+              >
+                <td class=" ">{{ item.article.nom }}</td>
+                <td class=" ">{{ item.article?.prix }} Dt</td>
+                <td class=" ">{{ item.quantity }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="mt-5">
+            <div class="d-flex justify-content-end mt-3">
+              <h5 class="me-3">Total:</h5>
+              <h5 class="text-success">{{ facture.montantTotal }} Dt</h5>
+            </div>
+          </div>
+        </div>
+        <a
+          href="#!"
+          class="btn btn-dark btn-lg card-footer-btn justify-content-center text-uppercase-bold-sm hover-lift-light"
+        >
+          <span class="svg-icon text-white me-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="512"
+              height="512"
+              viewBox="0 0 512 512"
+            >
+              <title>ionicons-v5-g</title>
+              <path
+                d="M336,208V113a80,80,0,0,0-160,0v95"
+                style="
+                  fill: none;
+                  stroke: #000;
+                  stroke-linecap: round;
+                  stroke-linejoin: round;
+                  stroke-width: 32px;
+                "
+              ></path>
+              <rect
+                x="96"
+                y="208"
+                width="320"
+                height="272"
+                rx="48"
+                ry="48"
+                style="
+                  fill: none;
+                  stroke: #000;
+                  stroke-linecap: round;
+                  stroke-linejoin: round;
+                  stroke-width: 32px;
+                "
+              ></rect>
+            </svg>
+          </span>
+          Merci pour votre confiance
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

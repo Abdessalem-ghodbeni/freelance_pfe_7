@@ -1,0 +1,378 @@
+<div class="page-content-wrapper border">
+  <!-- Title -->
+  <div class="row mb-3">
+    <div class="col-12 d-sm-flex justify-content-between align-items-center">
+      <h1 class="h3 mb-2 ms-md-5 ms-1 mb-sm-0">Liste des Articles</h1>
+      <a
+        class="btn btn-sm btn-primary p-2 me-3 mb-0"
+        href="admin/ajouter-article"
+        >Ajouter Article</a
+      >
+    </div>
+  </div>
+  <div class="card bg-transparent border p-3 mt-2">
+    <!-- Card header START -->
+    <div class="card-header bg-light border-bottom">
+      <!-- Search and select START -->
+      <div class="row g-3 align-items-center justify-content-between">
+        <!-- Search bar -->
+        <div class="col-md-8">
+          <form class="rounded position-relative">
+            <input
+              class="form-control bg-transparent"
+              [(ngModel)]="rechercherArticles"
+              name="rechercherArticles"
+              type="search"
+              placeholder="Entrez le nom de l'article"
+              aria-label="Search"
+            />
+            <button
+              class="bg-transparent p-2 position-absolute top-50 end-0 translate-middle-y border-0 text-primary-hover text-reset"
+              type="submit"
+            >
+              <i class="fas fa-search fs-6"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- Search and select END -->
+    </div>
+    <!-- Card header END -->
+
+    <!-- Card body START -->
+    <div>
+      <div class="card-body">
+        <!-- Table START -->
+        <div class="table-responsive border-0 rounded-3">
+          <table
+            *ngIf="listeArticles && listeArticles.length > 0; else noData"
+            class="table table-dark-gray align-middle p-4 mb-0 table-hover"
+          >
+            <!-- Table head -->
+            <thead>
+              <tr>
+                <th scope="col" class="border-0 rounded-start">
+                  Numéro Article
+                </th>
+                <th scope="col" class="border-0">Nom Article</th>
+                <th scope="col" class="border-0">Prix</th>
+                <th scope="col" class="border-0">Description</th>
+                <!-- <th scope="col" class="border-0">Catégorie</th> -->
+                <th scope="col" class="border-0">image</th>
+
+                <th scope="col" class="border-0 rounded-end">Action</th>
+              </tr>
+            </thead>
+            <!-- Table body START -->
+            <tbody
+              *ngFor="
+                let article of listeArticles
+                  | rechercheUniversite : rechercherArticles
+              "
+            >
+              <!-- Table row -->
+              <tr>
+                <!-- Table data -->
+                <!-- <td>
+                  <img
+                    [src]="getImageUrl(article.image)"
+                    class="img-responsive"
+                    alt="{{ article.name }}"
+                  />
+                </td> -->
+
+                <!-- Table data -->
+                <td>
+                  <h6 class="table-responsive-title mb-0">{{ article.id }}</h6>
+                </td>
+                <td>
+                  <h6 class="table-responsive-title mb-0">
+                    {{ article.nom }}
+                  </h6>
+                </td>
+
+                <td>
+                  <h6 class="table-responsive-title mb-0">
+                    {{ article.prix }}
+                  </h6>
+                </td>
+                <td>
+                  <h6 class="table-responsive-title mb-0">
+                    {{ article.description }}
+                  </h6>
+                </td>
+
+                <!-- <td>
+                  <h6 class="table-responsive-title mb-0">
+                    {{ article.categorie.nom }}
+                   
+                  </h6>
+                </td> -->
+                <td>
+                  <img
+                    [src]="getImageUrl(article.image)"
+                    class="img-fluid avatar img-thumbnail img-responsive"
+                    alt="{{ article.name }}"
+                  />
+                </td>
+
+                <td class="mt-0">
+                  <a
+                    (click)="deleteArticle(article.id)"
+                    class="btn btn-danger-soft me-1 mb-1 mb-md-0"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title=""
+                    data-bs-original-title="Delete"
+                  >
+                    <i class="bi bi-trash text-danger"></i>
+                  </a>
+                  <a
+                    (click)="getByid(article.id)"
+                    class="btn btn-info-soft btn-round me-1 mb-1 mb-md-0"
+                    data-bs-toggle="modal"
+                    data-bs-target="#getNewcard"
+                    title=""
+                    data-bs-original-title="Voir les détails"
+                  >
+                    <i class="bi bi-eye"></i>
+                  </a>
+
+                  <a
+                    data-bs-toggle="modal"
+                    data-bs-target="#getUpdateCard"
+                    title=""
+                    data-bs-original-title="Update Article"
+                    class="btn btn-success-soft btn-round me-1 mb-1 mb-md-0"
+                    (click)="getByid(article.id)"
+                  >
+                    <i class="bi bi-pencil-square"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+            <!-- Table body END -->
+          </table>
+        </div>
+        <!-- Table END -->
+      </div>
+    </div>
+    <ng-template #noData>
+      <div class="text-center p-3">
+        <div class="alert alert-dark" role="alert">
+          Aucun Article pour le moment...
+        </div>
+      </div>
+    </ng-template>
+    <!-- All review table END -->
+  </div>
+
+  <div
+    class="modal fade"
+    id="getNewcard"
+    tabindex="-1"
+    aria-labelledby="addNewcardLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+          <h5 class="modal-title text-white" id="addNewcardLabel">
+            Details d'article
+          </h5>
+          <button
+            type="button"
+            class="btn btn-sm btn-light mb-0"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="col-12">
+            <div class="card shadow h-100">
+              <!-- Image -->
+              <img
+                [src]="getImageUrl(myrticle?.image)"
+                class="card-img-top"
+                alt="course image"
+              />
+              <div class="card-body pb-0">
+                <!-- Badge and favorite -->
+                <div class="d-flex justify-content-between mb-2">
+                  <a
+                    href="#"
+                    class="badge bg-success bg-opacity-10 text-success"
+                    >{{ myrticle?.nom }}</a
+                  >
+                  <a href="#" class="text-danger"
+                    ><i class="fas fa-heart"></i
+                  ></a>
+                </div>
+                <!-- Title -->
+                <h5 class="card-title fw-normal">
+                  <a href="#">{{ myrticle?.nom }}</a>
+                </h5>
+                <p class="mb-2 text-truncate-2">
+                  {{ myrticle?.description }}
+                </p>
+                <!-- Rating star -->
+                <ul class="list-inline mb-0">
+                  <li class="list-inline-item me-0 small">
+                    <i class="fas fa-star text-warning"></i>
+                  </li>
+                  <li class="list-inline-item me-0 small">
+                    <i class="fas fa-star text-warning"></i>
+                  </li>
+                  <li class="list-inline-item me-0 small">
+                    <i class="fas fa-star text-warning"></i>
+                  </li>
+                  <li class="list-inline-item me-0 small">
+                    <i class="fas fa-star text-warning"></i>
+                  </li>
+                  <li class="list-inline-item me-0 small">
+                    <i class="fas fa-star-half-alt text-warning"></i>
+                  </li>
+                  <li class="list-inline-item ms-2 h6 fw-light mb-0">
+                    4.5/5.0
+                  </li>
+                </ul>
+              </div>
+              <!-- Card footer -->
+              <div class="card-footer pt-0 pb-3">
+                <hr />
+                <div class="d-flex justify-content-between">
+                  <span class="h6 fw-light mb-0"
+                    ><i class="fas fa-dollar-sign text-success me-2"> </i
+                    >{{ myrticle?.prix }}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer"></div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="getUpdateCard"
+    tabindex="-1"
+    aria-labelledby="getUpdateCard"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+          <h5 class="modal-title text-white" id="getUpdateCard">
+            Details d'article
+          </h5>
+          <button
+            type="button"
+            class="btn btn-sm btn-light mb-0"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="col-12">
+            <div class="card shadow h-100">
+              <!-- Image -->
+              <img
+                [src]="getImageUrl(myrticle?.image)"
+                class="card-img-top"
+                alt="course image"
+              />
+              <div class="card-body pb-0">
+                <form
+                  [formGroup]="ModifierArticleForm"
+                  (ngSubmit)="modifierArticle()"
+                >
+                  <div class="form-group">
+                    <label for="nom">Nom</label>
+                    <input
+                      type="text"
+                      id="nom"
+                      class="form-control"
+                      formControlName="nom"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea
+                      id="description"
+                      class="form-control"
+                      formControlName="description"
+                    ></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="prix">Prix</label>
+                    <input
+                      type="text"
+                      id="prix"
+                      class="form-control"
+                      formControlName="prix"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="categorieId">Catégorie</label>
+                    <select
+                      id="categorieId"
+                      class="form-control"
+                      formControlName="categorieId"
+                    >
+                      <option
+                        *ngFor="let categorie of listCategorie"
+                        [value]="categorie.id"
+                      >
+                        {{ categorie.nom }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="image">Image</label>
+                    <input
+                      type="file"
+                      id="image"
+                      class="form-control"
+                      (change)="onFileSelected($event)"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    (click)="modifierArticle()"
+                    class="btn btn-primary mt-3 justify-content-center"
+                  >
+                    Modifier
+                  </button>
+                </form>
+              </div>
+              <!-- Card footer -->
+              <div class="card-footer pt-0 pb-3">
+                <hr />
+                <div class="d-flex justify-content-between">
+                  <span class="h6 fw-light mb-0"
+                    ><i class="fas fa-dollar-sign text-success me-2"> </i
+                    >Modifier votre article si vous etes besoin...
+                    <i class="fas fa-dollar-sign text-success me-2"> </i
+                  ></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer"></div>
+      </div>
+    </div>
+  </div>
+</div>

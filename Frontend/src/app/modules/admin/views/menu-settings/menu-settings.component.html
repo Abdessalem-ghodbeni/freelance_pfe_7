@@ -1,0 +1,196 @@
+<div class="page-content-wrapper border">
+  <!-- Title -->
+  <div class="row">
+    <div class="col-12 mb-3">
+      <h1 class="h3 mb-2 mb-sm-0">Catégorie Settings</h1>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- Left side START -->
+    <div class="col-xl-3">
+      <!-- Tab START -->
+      <ul class="nav nav-pills nav-tabs-bg-dark flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" data-bs-toggle="tab" href="#tab-1"
+            ><i class="fas fa-plus fa-fw"></i>Ajouter-categorie</a
+          >
+        </li>
+      </ul>
+      <!-- Tab END -->
+    </div>
+    <!-- Left side END -->
+
+    <!-- Right side START -->
+    <div class="col-xl-9">
+      <!-- Tab Content START -->
+      <div class="tab-content">
+        <!-- Personal Information content START -->
+        <div class="tab-pane show active" id="tab-1">
+          <div class="card shadow">
+            <!-- Card header -->
+            <div class="card-header border-bottom">
+              <h5 class="card-header-title">Ajouter catégorie</h5>
+            </div>
+
+            <!-- Card body START -->
+            <div class="card-body">
+              <!-- Input item -->
+              <div class="col-12">
+                <form
+                  [formGroup]="addFormcategorie"
+                  (ngSubmit)="addcategorie()"
+                >
+                  <div class="mb-3 col-12">
+                    <label for="nom_Foyer" class="form-label"
+                      >Nom categorie</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nom_Foyer"
+                      aria-describedby="foyerName"
+                      formControlName="nom"
+                    />
+                    <span
+                      *ngIf="
+                        addFormcategorie.get('nom')?.invalid &&
+                        addFormcategorie.get('nom')?.touched
+                      "
+                      class="text-danger"
+                    >
+                      Nom du categorie est obligatoire.
+                    </span>
+                  </div>
+                  <div class="mb-3 col-12">
+                    <label for="capacity" class="form-label"
+                      >Description du catégorie
+                    </label>
+                    <textarea
+                      type="text"
+                      class="form-control"
+                      id="description"
+                      formControlName="description"
+                    ></textarea>
+
+                    <span
+                      *ngIf="
+                        addFormcategorie.get('description')?.invalid &&
+                        addFormcategorie.get('description')?.touched
+                      "
+                      class="text-danger"
+                    >
+                      description du catégorie est obligatoire.
+                    </span>
+                  </div>
+                  <div class="mt-2 mt-sm-0">
+                    <button class="btn btn-outline-primary mb-0" type="submit">
+                      Ajouter Catégorie
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- Card body END -->
+          </div>
+        </div>
+      </div>
+      <!-- Tab Content END -->
+    </div>
+    <!-- Right side END -->
+  </div>
+  <!-- Row END -->
+</div>
+<div
+  class="modal fade"
+  id="getUpdateCard"
+  tabindex="-1"
+  aria-labelledby="getUpdateCard"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-dark">
+        <h5 class="modal-title text-white" id="getUpdateCard">
+          Details d'article
+        </h5>
+        <button
+          type="button"
+          class="btn btn-sm btn-light mb-0"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-12">
+          <div class="card shadow h-100">
+            <form
+              [formGroup]="addFormUpdateCategorie"
+              (ngSubmit)="UpdateCategorie()"
+            >
+              <div class="mb-3 col-12">
+                <label for="nom_Foyer" class="form-label">Nom categorie</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nom_Foyer"
+                  aria-describedby="foyerName"
+                  formControlName="nom"
+                />
+                <span
+                  *ngIf="
+                    addFormUpdateCategorie.get('nom')?.invalid &&
+                    addFormUpdateCategorie.get('nom')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Nom du categorie est obligatoire.
+                </span>
+              </div>
+              <div class="mb-3 col-12">
+                <label for="capacity" class="form-label"
+                  >Description du catégorie
+                </label>
+                <textarea
+                  type="text"
+                  class="form-control"
+                  id="description"
+                  formControlName="description"
+                ></textarea>
+
+                <span
+                  *ngIf="
+                    addFormUpdateCategorie.get('description')?.invalid &&
+                    addFormUpdateCategorie.get('description')?.touched
+                  "
+                  class="text-danger"
+                >
+                  description du catégorie est obligatoire.
+                </span>
+              </div>
+              <div class="mt-2 mt-sm-0">
+                <button class="btn btn-outline-primary mb-0" type="submit">
+                  Modifier catégorie
+                </button>
+              </div>
+            </form>
+          </div>
+          <!-- Card footer -->
+          <div class="card-footer pt-0 pb-3">
+            <hr />
+            <div class="d-flex justify-content-between">
+              <span class="h6 fw-light mb-0"
+                ><i class="fas fa-dollar-sign text-success me-2"> </i>Ravi de
+                vous accompagner jusqu'a la modification de votre catégorie...
+                <i class="fas fa-dollar-sign text-success me-2"> </i
+              ></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer"></div>
+  </div>
+</div>
